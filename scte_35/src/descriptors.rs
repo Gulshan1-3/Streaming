@@ -1,8 +1,8 @@
-use ascii::AsciiString;
-use bitstream_io::{BigEndian, BitRecorder, BitWrite, BitWriter};
-use std::{fmt, io};
 
-use crate::{avial::AvailDescriptor, dtmf::DTMFDescriptor};
+use std::io;
+
+use crate::avial::AvailDescriptor;
+use crate::dtmf::DTMFDescriptor;
 
 
 pub(crate) trait SpliceDescriptorExt {

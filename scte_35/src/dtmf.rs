@@ -1,26 +1,30 @@
 use bitstream_io::{BitReader, BitWriter, BE};
-use serde::{Deserialize, Serialize};
+
+     
+   
+     
+
+
 use std::io::{Cursor, Result};
 
 const DTMF_DESCRIPTOR_TAG: u8 = 0x01;
 const CUE_IDENTIFIER: u32 = 0x43554549; // 'CUEI' in ASCII
 const RESERVED: u8 = 0b11111;
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename = "DTMFDescriptor", rename_all = "camelCase")]
-#[serde(default)]
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+
 pub struct DTMFDescriptor {
-    #[serde(skip_serializing)]
-    #[serde(rename = "type")]
+    
     pub json_type: u32,
-    #[serde(rename = "@preroll")]
+   
     pub preroll: u8,
-    #[serde(rename = "@chars")]
+    
     pub dtmf_chars: String,
 }
 
 impl Default for DTMFDescriptor {
-    fn default() -> Self {
+     fn default() -> Self {
         Self {
             json_type: DTMF_DESCRIPTOR_TAG as u32,
             preroll: 0,
@@ -32,7 +36,7 @@ impl Default for DTMFDescriptor {
 
 impl DTMFDescriptor {
     pub fn decode(data: &[u8]) -> Result<Self> {
-        let mut reader =  BitReader::endian(Cursor::new(data),BE);
+        let mut reader = BitReader::endian(Cursor::new(data), BE);
         let _tag = reader.read::<u8>(8)?;
         let _length = reader.read::<u8>(8)?; // descriptor_length
         let _identifier = reader.read::<u32>(32)?; // identifier
